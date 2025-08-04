@@ -33,7 +33,7 @@ EXPOSE 1433
 
 # Health check to verify SQL Server is running and responsive
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=5 \
-    CMD /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${MSSQL_SA_PASSWORD} -Q "SELECT 1" || exit 1
+    CMD /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P ${MSSQL_SA_PASSWORD} -C -Q "SELECT 1" || exit 1
 
 # Use a startup script that initializes the database after SQL Server starts
 CMD ["/bin/bash", "/usr/local/bin/init-db.sh"]
