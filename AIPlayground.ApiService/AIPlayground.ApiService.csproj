@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AIPlayground.ServiceDefaults\AIPlayground.ServiceDefaults.csproj" />
   </ItemGroup>
 
