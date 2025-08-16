@@ -1,18 +1,17 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-// Add password parameter for SQL Server
-var password = builder.AddParameter("sql-password", secret: true);
-
 // Build and use custom SQL Server 2025 image with full-text search
-var sqlServer = builder.AddContainer("sqlserver", "sqlserver-2025-fts")
-    .WithDockerfile("Dockerfile.sqlserver")
-    .WithEnvironment("SA_PASSWORD", password)
-    .WithEnvironment("ACCEPT_EULA", "Y")
-    .WithEnvironment("MSSQL_AGENT_ENABLED", "true")
-    .WithEndpoint(1433, 1433, "sql")
+var sqlServer = builder.AddSqlServer("sqlserver", port: 1434)
+    .WithDockerfile(".", "Dockerfile.sqlserver")
+    .WithEndpoint(1433, 1435, name: "sqlserver")
+
     .WithLifetime(ContainerLifetime.Persistent);
 
-var apiService = builder.AddProject<Projects.AIPlayground_ApiService>("apiservice");
+var database = sqlServer.AddDatabase("AIPlayground");
+
+var apiService = builder.AddProject<Projects.AIPlayground_ApiService>("apiservice")
+  .WithReference(database)
+  .WaitFor(database);
 
 builder.AddProject<Projects.AIPlayground_Web>("webfrontend")
     .WithExternalHttpEndpoints()
