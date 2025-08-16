@@ -3,7 +3,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 // Build and use custom SQL Server 2025 image with full-text search
 var sqlServer = builder.AddSqlServer("sqlserver", port: 1434)
     .WithDockerfile(".", "Dockerfile.sqlserver")
-    .WithEndpoint(1433, 1435, name: "sqlserver")
+    .WithEndpoint(1435, 1433, name: "sqlserver")
 
     .WithLifetime(ContainerLifetime.Persistent);
 
