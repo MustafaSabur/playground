@@ -20,15 +20,16 @@ public static class Extensions
 
         builder.AddDefaultHealthChecks();
 
-        builder.Services.AddServiceDiscovery();
+        // Temporarily comment out service discovery
+        // builder.Services.AddServiceDiscovery();
 
         builder.Services.ConfigureHttpClientDefaults(http =>
         {
             // Turn on resilience by default
             http.AddStandardResilienceHandler();
 
-            // Turn on service discovery by default
-            http.AddServiceDiscovery();
+            // Turn on service discovery by default - temporarily commented out
+            // http.AddServiceDiscovery();
         });
 
         return builder;
